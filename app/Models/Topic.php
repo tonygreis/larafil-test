@@ -22,4 +22,14 @@ class Topic extends Model implements HasMedia
             ->fit(Manipulations::FIT_CROP, 300, 300)
             ->nonQueued();
     }
+
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class);
+    }
+
+    public function meta()
+    {
+        return $this->morphOne(Meta::class, 'metaable');
+    }
 }

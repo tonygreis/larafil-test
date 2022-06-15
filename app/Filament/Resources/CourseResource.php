@@ -8,8 +8,10 @@ use App\Models\Course;
 use Closure;
 use Filament\Forms;
 use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Form;
@@ -17,6 +19,7 @@ use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 use Illuminate\Support\Str;
+use RyanChandler\FilamentProgressColumn\ProgressColumn;
 
 class CourseResource extends Resource
 {
@@ -33,13 +36,24 @@ class CourseResource extends Resource
                         ->reactive()
                         ->afterStateUpdated(function (Closure $set, $state) {
                             $set('slug', Str::slug($state));
+                            $set('meta.url', url(Str::slug($state)));
+                            $set('meta.title', $state);
                         }),
                     TextInput::make('slug'),
                     TextInput::make('github_repo'),
                     RichEditor::make('description'),
                     SpatieMediaLibraryFileUpload::make('thumbnail')->collection('courses'),
                     Toggle::make('is_published')
-                ])->columns(1)
+                ])->columns(1),
+                Card::make()->schema([
+                    Fieldset::make('Meta')
+                        ->relationship('meta')
+                        ->schema([
+                            TextInput::make('title'),
+                            TextInput::make('url'),
+                            Textarea::make('description'),
+                        ])
+                ])
             ]);
     }
 

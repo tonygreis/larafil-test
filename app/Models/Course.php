@@ -22,4 +22,19 @@ class Course extends Model implements HasMedia
             ->fit(Manipulations::FIT_CROP, 300, 300)
             ->nonQueued();
     }
+
+    public function sections()
+    {
+        return $this->hasMany(Section::class);
+    }
+
+    public function topics()
+    {
+        return $this->belongsToMany(Course::class);
+    }
+
+    public function meta()
+    {
+        return $this->morphOne(Meta::class, 'metaable');
+    }
 }
