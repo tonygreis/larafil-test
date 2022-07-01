@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('course_topic', function (Blueprint $table) {
-            $table->foreignId('course_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('topic_id')->constrained()->cascadeOnDelete();
+        Schema::create('post_tag', function (Blueprint $table) {
+            $table->foreignId('post_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('tag_id')->constrained()->cascadeOnDelete();
         });
     }
 
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('course_topic');
+        Schema::dropIfExists('post_tag');
     }
 };

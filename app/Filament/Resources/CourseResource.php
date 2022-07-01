@@ -9,6 +9,7 @@ use Closure;
 use Filament\Forms;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Fieldset;
+use Filament\Forms\Components\MultiSelect;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Textarea;
@@ -18,6 +19,8 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Columns\BooleanColumn;
+use Filament\Tables\Columns\TextColumn;
 use Illuminate\Support\Str;
 use RyanChandler\FilamentProgressColumn\ProgressColumn;
 
@@ -40,6 +43,8 @@ class CourseResource extends Resource
                             $set('meta.title', $state);
                         }),
                     TextInput::make('slug'),
+                    MultiSelect::make('topics')
+                        ->relationship('topics', 'name'),
                     TextInput::make('github_repo'),
                     RichEditor::make('description'),
                     SpatieMediaLibraryFileUpload::make('thumbnail')->collection('courses'),
@@ -61,7 +66,9 @@ class CourseResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('name')->sortable()->searchable(),
+                TextColumn::make('created_at')->since()->sortable(),
+                BooleanColumn::make('is_published')
             ])
             ->filters([
                 //

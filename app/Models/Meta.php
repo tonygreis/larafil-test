@@ -10,6 +10,7 @@ class Meta extends Model
     use HasFactory;
 
     protected $fillable = ['title', 'url', 'description'];
+    public $timestamps = false;
 
     public function metaable()
     {

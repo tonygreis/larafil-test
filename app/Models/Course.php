@@ -30,7 +30,7 @@ class Course extends Model implements HasMedia
 
     public function topics()
     {
-        return $this->belongsToMany(Course::class);
+        return $this->belongsToMany(Topic::class);
     }
 
     public function meta()
