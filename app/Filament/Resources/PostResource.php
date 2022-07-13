@@ -23,7 +23,9 @@ use Filament\Tables\Columns\BooleanColumn;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Mail\Markdown;
 use Illuminate\Support\Str;
+use Mohamedsabil83\FilamentFormsTinyeditor\Components\TinyEditor;
 
 class PostResource extends Resource
 {
@@ -48,7 +50,7 @@ class PostResource extends Resource
                     MultiSelect::make('topics')
                         ->relationship('topics', 'name'),
                     TextInput::make('github_repo'),
-                    RichEditor::make('description'),
+                    TinyEditor::make('description'),
                     SpatieMediaLibraryFileUpload::make('thumbnail')->collection('posts'),
                     Toggle::make('is_published'),
                     MultiSelect::make('tags')

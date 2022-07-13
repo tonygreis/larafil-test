@@ -14,6 +14,7 @@ use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Support\Str;
 
 class SectionResource extends Resource
@@ -48,14 +49,14 @@ class SectionResource extends Resource
                 TextColumn::make('course.name')->sortable()
             ])
             ->filters([
-                //
+                SelectFilter::make('course')->relationship('course', 'name')
             ]);
     }
 
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\LessonsRelationManager::class,
         ];
     }
 

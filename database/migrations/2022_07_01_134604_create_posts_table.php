@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug')->unique();
-            $table->longText('description')->nullable();
+            $table->longText('description')->fulltext()->nullable();
             $table->string('github_repo')->nullable();
             $table->boolean('is_published')->default(false);
             $table->timestamps();

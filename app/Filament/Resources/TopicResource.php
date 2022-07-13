@@ -57,7 +57,8 @@ class TopicResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\CoursesRelationManager::class,
+            RelationManagers\PostsRelationManager::class,
         ];
     }
 

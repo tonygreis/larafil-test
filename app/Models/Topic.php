@@ -32,4 +32,9 @@ class Topic extends Model implements HasMedia
     {
         return $this->morphOne(Meta::class, 'metaable');
     }
+
+    public function posts()
+    {
+        return $this->belongsToMany(Post::class);
+    }
 }

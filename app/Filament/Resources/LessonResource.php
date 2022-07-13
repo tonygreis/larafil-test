@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\EmbedType;
 use App\Filament\Resources\LessonResource\Pages;
 use App\Filament\Resources\LessonResource\RelationManagers;
 use App\Models\Lesson;
@@ -18,6 +19,7 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\BooleanColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
@@ -43,8 +45,8 @@ class LessonResource extends Resource
                     TextInput::make('slug'),
                     Select::make('platform')
                         ->options([
-                            'youtube' => 'Youtube',
-                            'vimeo' => 'Vimeo',
+                          EmbedType::Youtube->value => EmbedType::Youtube->name,
+                          EmbedType::Vimeo->value => EmbedType::Vimeo->name
                         ]),
                     TextInput::make('external_id'),
                     RichEditor::make('description'),
@@ -63,7 +65,7 @@ class LessonResource extends Resource
                 BooleanColumn::make('is_published'),
             ])
             ->filters([
-                //
+                SelectFilter::make('section')->relationship('section', 'name')
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
